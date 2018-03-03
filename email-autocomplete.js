@@ -32,9 +32,9 @@ class EmailInput extends React.Component {
     }
   }
 
-  // componentDidUpdate() {
-  //   console.log(this.state.close)
-  // }
+  componentWillUpdate() {
+
+  }
 
   componentDidMount() {
     document.addEventListener('click', this.itemVisibilityStatus.bind(this));
@@ -54,32 +54,34 @@ class EmailInput extends React.Component {
 
   onKeyDownHandler(e) {
     let keyCode = e.keyCode;
+    let filter = this.props.email.filter((el, idx) => {
+      return !el.indexOf(this.state.atAfterValue);
+    });
     if (!this.state.close) {
       switch (keyCode) {
       case 38:
         this.setState(prevState => ({
-          index: prevState.index > 0 ? prevState.index - 1 : this.props.email.length - 1
+          index: prevState.index > 0 ? prevState.index - 1 : filter.length - 1
         }), () => {
           this.setState({
-            value: `${this.state.atBeforeValue}${this.props.email[this.state.index]}`
+            value: `${this.state.atBeforeValue}${filter[this.state.index]}`
           });
         });
         break;
       case 40:
         this.setState(prevState => ({
-          index: prevState.index < this.props.email.length - 1 ? prevState.index + 1 : 0
+          index: prevState.index < filter.length - 1 ? prevState.index + 1 : 0
         }), () => {
           this.setState({
-            value: `${this.state.atBeforeValue}${this.props.email[this.state.index]}`
+            value: `${this.state.atBeforeValue}${filter[this.state.index]}`
           });
         });
-
         break;
       case 13:
         this.setState({
           close: true,
           index: 0,
-          value: this.state.atBeforeValue + this.props.email[this.state.index]
+          value: this.state.atBeforeValue + filter[this.state.index]
         });
         break;
       default:
@@ -101,8 +103,7 @@ class EmailInput extends React.Component {
   onClickItemHandler(e) {
     this.props.getItemText(e.target.innerText);
     this.setState({
-      close: true,
-      index: 0
+      close: true
     });
   }
 
@@ -122,15 +123,27 @@ class EmailInput extends React.Component {
           this.atBeforeValuePattern.test(this.state.atBeforeValue)
             ? <div className="email-item" style={{display: this.state.close ? 'none' : ''}}>
               {
-                this.props.email
-                  .sort()
-                  .map((el, idx) => {
-                    return !el.indexOf(this.state.atAfterValue)
-                      ? <p style={{backgroundColor: idx !== this.state.index ? '' : '#eee'}}
+                !this.state.atAfterValue
+                  ? this.props.email
+                    .sort()
+                    .map((el, idx) => {
+                      return <p style={{backgroundColor: idx !== this.state.index ? '' : '#eee'}}
                         className="item"
                         key={idx}
-                        onClick={this.onClickItemHandler}>{this.state.atBeforeValue}{el}</p> : '';
-                  })
+                        onClick={this.onClickItemHandler}>{this.state.atBeforeValue}{el}</p>;
+                    })
+                  : this.props.email
+                    .filter((el, idx) => {
+                      return !el.indexOf(this.state.atAfterValue);
+                    })
+                    .sort()
+                    .map((el, idx) => {
+                      return <p style={{backgroundColor: idx !== this.state.index ? '' : '#eee'}}
+                        className="item"
+                        key={idx}
+                        onClick={this.onClickItemHandler}>{this.state.atBeforeValue}{el}</p>;
+                    })
+
               }
             </div> : ''
         }
