@@ -91,7 +91,7 @@ class EmailInput extends React.Component {
   }
 
   onClickItemHandler(e) {
-    this.props.getItemText(e.target);
+    this.props.getItemText(e.target.innerText);
     this.setState({
       close: true
     });
@@ -140,9 +140,9 @@ class Email extends React.Component {
   state= {
     text: ''
   };
-  getItemText(el) {
+  getItemText(text) {
     this.setState({
-      text: el.innerText
+      text
     });
   }
   render() {
