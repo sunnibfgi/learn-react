@@ -16,7 +16,6 @@ class EmailInput extends React.Component {
     close: true
   };
 
-
   atBeforeValuePattern = /^[a-zA-Z0-9_@]+$/;
 
   itemVisibilityStatus(e) {
@@ -27,10 +26,15 @@ class EmailInput extends React.Component {
       });
     } else {
       this.setState({
-        close: true
+        close: true,
+        index: 0
       });
     }
   }
+
+  // componentDidUpdate() {
+  //   console.log(this.state.close)
+  // }
 
   componentDidMount() {
     document.addEventListener('click', this.itemVisibilityStatus.bind(this));
@@ -42,61 +46,65 @@ class EmailInput extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.value !== nextProps.value) {
       this.setState({
-        value: nextProps.value
+        value: nextProps.value,
+        index: 0
       });
     }
   }
 
   onKeyDownHandler(e) {
     let keyCode = e.keyCode;
-    switch (keyCode) {
-    case 38:
-      this.setState(prevState => ({
-        index: Math.min(this.props.email.length - 1, Math.max(prevState.index - 1, 0))
-      }), () => {
-        this.setState({
-          value: `${this.state.atBeforeValue}${this.props.email[this.state.index]}`
+    if (!this.state.close) {
+      switch (keyCode) {
+      case 38:
+        this.setState(prevState => ({
+          index: prevState.index > 0 ? prevState.index - 1 : this.props.email.length - 1
+        }), () => {
+          this.setState({
+            value: `${this.state.atBeforeValue}${this.props.email[this.state.index]}`
+          });
         });
-      });
-      break;
-    case 40:
-      this.setState(prevState => ({
-        index: Math.max(0, Math.min(prevState.index + 1, this.props.email.length - 1))
-      }), () => {
-        this.setState({
-          value: `${this.state.atBeforeValue}${this.props.email[this.state.index]}`
+        break;
+      case 40:
+        this.setState(prevState => ({
+          index: prevState.index < this.props.email.length - 1 ? prevState.index + 1 : 0
+        }), () => {
+          this.setState({
+            value: `${this.state.atBeforeValue}${this.props.email[this.state.index]}`
+          });
         });
-      });
 
-      break;
-    case 13:
-      this.setState({
-        close: true,
-        value: this.state.atBeforeValue + this.props.email[this.state.index]
-      });
-      break;
+        break;
+      case 13:
+        this.setState({
+          close: true,
+          index: 0,
+          value: this.state.atBeforeValue + this.props.email[this.state.index]
+        });
+        break;
+      default:
+        break;
+      }
     }
   }
   onChangeHandler(e) {
     let {value} = e.target;
     let indexOf = value.indexOf('@');
-    if (!this.atBeforeValuePattern.test(this.state.atBeforeValue)) return false;
-
     this.setState({
       value: value,
       atBeforeValue: indexOf > 0 ? value.substring(0, indexOf + 1) : '',
       atAfterValue: indexOf > 0 ? value.substring(indexOf + 1, value.length) : '',
-      close: false
+      close: !(indexOf >= 0)
     });
   }
 
   onClickItemHandler(e) {
     this.props.getItemText(e.target.innerText);
     this.setState({
-      close: true
+      close: true,
+      index: 0
     });
   }
-
 
   render() {
     return (
