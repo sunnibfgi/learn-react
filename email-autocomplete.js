@@ -54,10 +54,10 @@ class EmailInput extends React.Component {
 
   onKeyDownHandler(e) {
     let keyCode = e.keyCode;
-    let filter = this.props.email.filter((el, idx) => {
+    let filter = this.props.email.filter((el) => {
       return !el.indexOf(this.state.atAfterValue);
     });
-    if (!this.state.close) {
+    if (!this.state.close && this.atBeforeValuePattern.test(this.state.atBeforeValue)) {
       switch (keyCode) {
       case 38:
         this.setState(prevState => ({
@@ -85,6 +85,9 @@ class EmailInput extends React.Component {
         });
         break;
       default:
+        this.setState({
+          index: 0
+        });
         break;
       }
     }
@@ -103,7 +106,8 @@ class EmailInput extends React.Component {
   onClickItemHandler(e) {
     this.props.getItemText(e.target.innerText);
     this.setState({
-      close: true
+      close: true,
+      index: 0
     });
   }
 
@@ -127,21 +131,27 @@ class EmailInput extends React.Component {
                   ? this.props.email
                     .sort()
                     .map((el, idx) => {
-                      return <p style={{backgroundColor: idx !== this.state.index ? '' : '#eee'}}
-                        className="item"
+                      return <Items
                         key={idx}
-                        onClick={this.onClickItemHandler}>{this.state.atBeforeValue}{el}</p>;
+                        keys = {idx}
+                        index={this.state.index}
+                        el={el}
+                        atBeforeValue = {this.state.atBeforeValue}
+                        onClickItemHandler={this.onClickItemHandler} />;
                     })
                   : this.props.email
-                    .filter((el, idx) => {
+                    .filter((el) => {
                       return !el.indexOf(this.state.atAfterValue);
                     })
                     .sort()
                     .map((el, idx) => {
-                      return <p style={{backgroundColor: idx !== this.state.index ? '' : '#eee'}}
-                        className="item"
+                      return <Items
                         key={idx}
-                        onClick={this.onClickItemHandler}>{this.state.atBeforeValue}{el}</p>;
+                        keys = {idx}
+                        index={this.state.index}
+                        el={el}
+                        atBeforeValue = {this.state.atBeforeValue}
+                        onClickItemHandler={this.onClickItemHandler} />;
                     })
 
               }
@@ -151,6 +161,13 @@ class EmailInput extends React.Component {
       </div>
     );
   }
+}
+
+function Items(props) {
+  return (
+    <p style={{backgroundColor: props.keys !== props.index ? '' : '#eee'}}
+      className="item" onClick={props.onClickItemHandler}>{props.atBeforeValue}{props.el}</p>
+  );
 }
 
 class Email extends React.Component {
