@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-class ColorDiaplay extends React.Component {
+class ColorDisplay extends React.Component {
   constructor(props) {
     super(props);
     this.onMouseOverHandler = this.onMouseOverHandler.bind(this);
@@ -61,7 +61,7 @@ class ColorPanel extends React.Component {
   render() {
     return (
       <div>
-        <ColorDiaplay onItemMouseOver={this.changeColor}
+        <ColorDisplay onItemMouseOver={this.changeColor}
           onItemMouseOut={this.existColor}
           colors = {this.props.colors} 
           existColor={this.state.existColor} 
