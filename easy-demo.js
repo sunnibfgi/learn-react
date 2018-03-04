@@ -61,10 +61,11 @@ class ColorPanel extends React.Component {
   render() {
     return (
       <div>
-
         <ColorDiaplay onItemMouseOver={this.changeColor}
           onItemMouseOut={this.existColor}
-          colors = {this.props.colors} existColor={this.state.existColor} colors={this.props.colors} color = {this.state.color} />
+          colors = {this.props.colors} 
+          existColor={this.state.existColor} 
+          color = {this.state.color} />
       </div>
     );
   }
