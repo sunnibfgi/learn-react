@@ -2,27 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 class ColorDisplay extends React.Component {
-  constructor(props) {
-    super(props);
-    this.onMouseOverHandler = this.onMouseOverHandler.bind(this);
-    this.onMouseOutHandler = this.onMouseOutHandler.bind(this);
-  }
-
-  onMouseOverHandler(idx) {
-    return this.props.onItemMouseOver(idx);
-  }
-  onMouseOutHandler() {
-    return this.props.onItemMouseOut();
-  }
-
   render() {
     return (
       <div>
         {
           this.props.colors.map((color, idx) => {
             return <p key={idx} style={{width: '30%', color: '#fff', backgroundColor: color}}
-              onMouseOver={(e) => this.onMouseOverHandler(idx, e)}
-              onMouseOut={this.onMouseOutHandler} >{color}</p>;
+              onMouseOver={ this.props.onItemMouseOver(idx)}
+              onMouseOut={this.props.onItemMouseOut} >{color}</p>;
           })
         }
         <p>
@@ -36,6 +23,14 @@ class ColorDisplay extends React.Component {
     );
   }
 }
+ColorDiaplay.propTypes = {
+  onItemMouseOver: PropTypes.func.isRequired,
+  onItemMouseOut: PropTypes.func.isRequired,
+  color: PropTypes.string.isRequired,
+  colors: PropTypes.array.isRequired,
+  existColor: PropTypes.bool.isRequired
+};
+
 
 class ColorPanel extends React.Component {
   state = {
@@ -70,6 +65,9 @@ class ColorPanel extends React.Component {
     );
   }
 }
+ColorPanel.propTypes = {
+  colors: PropTypes.array.isRequired
+};
 
 ReactDOM.render(
   <ColorPanel colors={['blue', 'red', 'orange', 'green']} />,
