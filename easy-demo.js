@@ -8,7 +8,7 @@ class ColorDisplay extends React.Component {
         {
           this.props.colors.map((color, idx) => {
             return <p key={idx} style={{width: '30%', color: '#fff', backgroundColor: color}}
-              onMouseOver={ this.props.onItemMouseOver(idx)}
+              onMouseOver={() => this.props.onItemMouseOver(idx)}
               onMouseOut={this.props.onItemMouseOut} >{color}</p>;
           })
         }
