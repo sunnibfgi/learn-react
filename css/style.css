@@ -1,0 +1,5 @@
+* { margin: 0; padding: 0; }
+.modal-overlay { position: fixed; bottom: 0; left: 0; right: 0; top: 0; background: #000; opacity: .5; }
+.toast-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: transparent; z-index: 1000 }
+.toast {position: fixed; border-radius: 5px; padding: 5px 15px; color: #fff; background: #333;
+ box-shadow: 2px 2px 5px #aaa; z-index: 1001 }
