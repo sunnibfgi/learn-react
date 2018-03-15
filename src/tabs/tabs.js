@@ -4,19 +4,33 @@ import PropTypes from 'prop-types';
 
 class TabPanel extends React.Component {
   renderTabTitle() {
-    let {children, currentIndex, setCurrentNav} = this.props;
+    let {children, currentIndex, spread, setCurrentNav} = this.props;
+
+    if (!children.length) return null;
+
+    if ('spread' in this.props && spread.length) {
+      let navItem = children.concat(spread);
+      return (
+        navItem.map((el, idx) =>
+          <li key={idx}
+            className={idx === currentIndex ? 'current' : ''}
+            onClick={() => setCurrentNav(idx)}
+          >
+            {children[idx] && children[idx].props.tabname ? children[idx].props.tabname : el}
+          </li>
+        )
+      );
+    }
+
     return (
-      <ul>
-        {
-          children.length &&
-            children.map((el, idx) =>
-              <li
-                key={idx}
-                className={idx === currentIndex ? 'current' : ''}
-                onClick={() => setCurrentNav(idx)}
-              >{children[idx].props.tabname}</li>)
-        }
-      </ul>
+      children.map((child, idx) =>
+        <li key={idx}
+          className={idx === currentIndex ? 'current' : ''}
+          onClick={() => setCurrentNav(idx)}
+        >
+          {children[idx].props.tabname}
+        </li>
+      )
     );
   }
 
@@ -39,6 +53,7 @@ class TabPanel extends React.Component {
 }
 
 TabPanel.propTypes = {
+  spread: PropTypes.array,
   children: PropTypes.array.isRequired,
   currentIndex: PropTypes.number.isRequired,
   setCurrentNav: PropTypes.func.isRequired
@@ -84,7 +99,6 @@ class Tabs extends React.Component {
 
   render() {
     let {currentIndex} = this.state;
-
     return (
       <TabPanel
         setCurrentNav = {this.onClickTabNavHandler}
@@ -102,6 +116,7 @@ Tabs.propTypes = {
   hasStore: PropTypes.bool
 };
 ReactDOM.render(
-  <Tabs />,
+  <Tabs hasStore/>,
   document.getElementById('app')
 );
+
