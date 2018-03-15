@@ -23,7 +23,7 @@ class TabPanel extends React.Component {
   renderTabContent() {
     let props = {...this.props};
     return (
-      <div className="tab-pane">
+      <div className="tab-content">
         {props.children[props.currentIndex]}
       </div>
     );
@@ -84,6 +84,7 @@ class Tabs extends React.Component {
 
   render() {
     let {currentIndex} = this.state;
+
     return (
       <TabPanel
         setCurrentNav = {this.onClickTabNavHandler}
@@ -100,7 +101,6 @@ class Tabs extends React.Component {
 Tabs.propTypes = {
   hasStore: PropTypes.bool
 };
-
 ReactDOM.render(
   <Tabs />,
   document.getElementById('app')
