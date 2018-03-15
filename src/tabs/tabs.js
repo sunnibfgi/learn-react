@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 class TabPanel extends React.Component {
   renderTabTitle() {
-    let {children, tabNav, currentIndex, setCurrentNav} = this.props;
+    let {children, currentIndex, setCurrentNav} = this.props;
     return (
       <ul>
         {
@@ -14,7 +14,7 @@ class TabPanel extends React.Component {
                 key={idx}
                 className={idx === currentIndex ? 'current' : ''}
                 onClick={() => setCurrentNav(idx)}
-              >{tabNav[idx]}</li>)
+              >{children[idx].props.tabname}</li>)
         }
       </ul>
     );
@@ -40,7 +40,6 @@ class TabPanel extends React.Component {
 
 TabPanel.propTypes = {
   children: PropTypes.array.isRequired,
-  tabNav: PropTypes.array.isRequired,
   currentIndex: PropTypes.number.isRequired,
   setCurrentNav: PropTypes.func.isRequired
 };
@@ -58,7 +57,10 @@ class Tabs extends React.Component {
 
   storeCurrentState() {
     let {localStorage} = window;
-    if (!'hasStore' in this.props) return false;
+    if (!('hasStore' in this.props)) {
+      localStorage.removeItem('tabIndex');
+      return false;
+    };
     localStorage.setItem('tabIndex', JSON.stringify(this.state.currentIndex));
   }
 
@@ -82,27 +84,24 @@ class Tabs extends React.Component {
 
   render() {
     let {currentIndex} = this.state;
-    let {tabNav} = this.props;
     return (
       <TabPanel
         setCurrentNav = {this.onClickTabNavHandler}
-        currentIndex= {currentIndex}
-        tabNav={tabNav}>
-        <div className="tab-content">tab content 1</div>
-        <div className="tab-content">tab content 2</div>
-        <div className="tab-content">tab content 3</div>
-        <div className="tab-content">tab content 4</div>
+        currentIndex= {currentIndex}>
+        <div tabname="chrome" className="tab-item">tab content 1</div>
+        <div tabname="firefox" className="tab-item">tab content 2</div>
+        <div tabname="safari" className="tab-item">tab content 3</div>
+        <div tabname="opera" className="tab-item">tab content 4</div>
       </TabPanel>
     );
   }
 }
 
 Tabs.propTypes = {
-  hasStore: PropTypes.bool,
-  tabNav: PropTypes.array.isRequired
+  hasStore: PropTypes.bool
 };
 
 ReactDOM.render(
-  <Tabs hasStore tabNav={['chrome', 'firefox', 'safari', 'opera']}/>,
+  <Tabs />,
   document.getElementById('app')
 );

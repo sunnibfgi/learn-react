@@ -70,202 +70,11 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(4);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(10);
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-var _propTypes = __webpack_require__(24);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var TabPanel = function (_React$Component) {
-  _inherits(TabPanel, _React$Component);
-
-  function TabPanel() {
-    _classCallCheck(this, TabPanel);
-
-    return _possibleConstructorReturn(this, (TabPanel.__proto__ || Object.getPrototypeOf(TabPanel)).apply(this, arguments));
-  }
-
-  _createClass(TabPanel, [{
-    key: 'renderTabTitle',
-    value: function renderTabTitle() {
-      var _props = this.props,
-          children = _props.children,
-          tabNav = _props.tabNav,
-          currentIndex = _props.currentIndex,
-          setCurrentNav = _props.setCurrentNav;
-
-      return _react2.default.createElement(
-        'ul',
-        null,
-        children.length && children.map(function (el, idx) {
-          return _react2.default.createElement(
-            'li',
-            {
-              key: idx,
-              className: idx === currentIndex ? 'current' : '',
-              onClick: function onClick() {
-                return setCurrentNav(idx);
-              }
-            },
-            tabNav[idx]
-          );
-        })
-      );
-    }
-  }, {
-    key: 'renderTabContent',
-    value: function renderTabContent() {
-      var props = _extends({}, this.props);
-      return _react2.default.createElement(
-        'div',
-        { className: 'tab-pane' },
-        props.children[props.currentIndex]
-      );
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        { className: 'tabs' },
-        this.renderTabTitle(),
-        this.renderTabContent()
-      );
-    }
-  }]);
-
-  return TabPanel;
-}(_react2.default.Component);
-
-TabPanel.propTypes = {
-  children: _propTypes2.default.array.isRequired,
-  tabNav: _propTypes2.default.array.isRequired,
-  currentIndex: _propTypes2.default.number.isRequired,
-  setCurrentNav: _propTypes2.default.func.isRequired
-};
-
-var Tabs = function (_React$Component2) {
-  _inherits(Tabs, _React$Component2);
-
-  function Tabs(props) {
-    _classCallCheck(this, Tabs);
-
-    var _this2 = _possibleConstructorReturn(this, (Tabs.__proto__ || Object.getPrototypeOf(Tabs)).call(this, props));
-
-    _this2.state = {
-      currentIndex: 0
-    };
-
-    _this2.onClickTabNavHandler = _this2.onClickTabNavHandler.bind(_this2);
-    return _this2;
-  }
-
-  _createClass(Tabs, [{
-    key: 'storeCurrentState',
-    value: function storeCurrentState() {
-      var _window = window,
-          localStorage = _window.localStorage;
-
-      if (!'hasStore' in this.props) return false;
-      localStorage.setItem('tabIndex', JSON.stringify(this.state.currentIndex));
-    }
-  }, {
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      if (localStorage.getItem('tabIndex') != null) {
-        this.setState({
-          currentIndex: JSON.parse(localStorage.getItem('tabIndex'))
-        });
-      }
-    }
-  }, {
-    key: 'componentDidUpdate',
-    value: function componentDidUpdate() {
-      this.storeCurrentState();
-    }
-  }, {
-    key: 'onClickTabNavHandler',
-    value: function onClickTabNavHandler(idx) {
-      this.setState({
-        currentIndex: idx
-      });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var currentIndex = this.state.currentIndex;
-      var tabNav = this.props.tabNav;
-
-      return _react2.default.createElement(
-        TabPanel,
-        {
-          setCurrentNav: this.onClickTabNavHandler,
-          currentIndex: currentIndex,
-          tabNav: tabNav },
-        _react2.default.createElement(
-          'div',
-          { className: 'tab-content' },
-          'tab content 1'
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'tab-content' },
-          'tab content 2'
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'tab-content' },
-          'tab content 3'
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'tab-content' },
-          'tab content 4'
-        )
-      );
-    }
-  }]);
-
-  return Tabs;
-}(_react2.default.Component);
-
-Tabs.propTypes = {
-  hasStore: _propTypes2.default.bool,
-  tabNav: _propTypes2.default.array.isRequired
-};
-
-_reactDom2.default.render(_react2.default.createElement(Tabs, { hasStore: true, tabNav: ['chrome', 'firefox', 'safari', 'opera'] }), document.getElementById('app'));
-
-/***/ }),
-/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -307,7 +116,7 @@ emptyFunction.thatReturnsArgument = function (arg) {
 module.exports = emptyFunction;
 
 /***/ }),
-/* 2 */
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -366,7 +175,7 @@ function invariant(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 /***/ }),
-/* 3 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -380,7 +189,7 @@ module.exports = invariant;
 
 
 
-var emptyFunction = __webpack_require__(1);
+var emptyFunction = __webpack_require__(0);
 
 /**
  * Similar to invariant but only logs a warning if the condition is not met.
@@ -434,21 +243,7 @@ if (true) {
 module.exports = warning;
 
 /***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-if (false) {
-  module.exports = require('./cjs/react.production.min.js');
-} else {
-  module.exports = __webpack_require__(8);
-}
-
-
-/***/ }),
-/* 5 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -545,30 +340,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
-
-
-var emptyObject = {};
-
-if (true) {
-  Object.freeze(emptyObject);
-}
-
-module.exports = emptyObject;
-
-/***/ }),
-/* 7 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -582,9 +354,9 @@ module.exports = emptyObject;
 
 
 if (true) {
-  var invariant = __webpack_require__(2);
-  var warning = __webpack_require__(3);
-  var ReactPropTypesSecret = __webpack_require__(9);
+  var invariant = __webpack_require__(1);
+  var warning = __webpack_require__(2);
+  var ReactPropTypesSecret = __webpack_require__(7);
   var loggedTypeFailures = {};
 }
 
@@ -634,7 +406,252 @@ module.exports = checkPropTypes;
 
 
 /***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+if (false) {
+  module.exports = require('./cjs/react.production.min.js');
+} else {
+  module.exports = __webpack_require__(9);
+}
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
+
+
+var emptyObject = {};
+
+if (true) {
+  Object.freeze(emptyObject);
+}
+
+module.exports = emptyObject;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
+
+module.exports = ReactPropTypesSecret;
+
+
+/***/ }),
 /* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(5);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(10);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _propTypes = __webpack_require__(24);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var TabPanel = function (_React$Component) {
+  _inherits(TabPanel, _React$Component);
+
+  function TabPanel() {
+    _classCallCheck(this, TabPanel);
+
+    return _possibleConstructorReturn(this, (TabPanel.__proto__ || Object.getPrototypeOf(TabPanel)).apply(this, arguments));
+  }
+
+  _createClass(TabPanel, [{
+    key: 'renderTabTitle',
+    value: function renderTabTitle() {
+      var _props = this.props,
+          children = _props.children,
+          currentIndex = _props.currentIndex,
+          setCurrentNav = _props.setCurrentNav;
+
+      return _react2.default.createElement(
+        'ul',
+        null,
+        children.length && children.map(function (el, idx) {
+          return _react2.default.createElement(
+            'li',
+            {
+              key: idx,
+              className: idx === currentIndex ? 'current' : '',
+              onClick: function onClick() {
+                return setCurrentNav(idx);
+              }
+            },
+            children[idx].props.tabname
+          );
+        })
+      );
+    }
+  }, {
+    key: 'renderTabContent',
+    value: function renderTabContent() {
+      var props = _extends({}, this.props);
+      return _react2.default.createElement(
+        'div',
+        { className: 'tab-pane' },
+        props.children[props.currentIndex]
+      );
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'tabs' },
+        this.renderTabTitle(),
+        this.renderTabContent()
+      );
+    }
+  }]);
+
+  return TabPanel;
+}(_react2.default.Component);
+
+TabPanel.propTypes = {
+  children: _propTypes2.default.array.isRequired,
+  currentIndex: _propTypes2.default.number.isRequired,
+  setCurrentNav: _propTypes2.default.func.isRequired
+};
+
+var Tabs = function (_React$Component2) {
+  _inherits(Tabs, _React$Component2);
+
+  function Tabs(props) {
+    _classCallCheck(this, Tabs);
+
+    var _this2 = _possibleConstructorReturn(this, (Tabs.__proto__ || Object.getPrototypeOf(Tabs)).call(this, props));
+
+    _this2.state = {
+      currentIndex: 0
+    };
+
+    _this2.onClickTabNavHandler = _this2.onClickTabNavHandler.bind(_this2);
+    return _this2;
+  }
+
+  _createClass(Tabs, [{
+    key: 'storeCurrentState',
+    value: function storeCurrentState() {
+      var _window = window,
+          localStorage = _window.localStorage;
+
+      if (!('hasStore' in this.props)) {
+        localStorage.removeItem('tabIndex');
+        return false;
+      };
+      localStorage.setItem('tabIndex', JSON.stringify(this.state.currentIndex));
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      if (localStorage.getItem('tabIndex') != null) {
+        this.setState({
+          currentIndex: JSON.parse(localStorage.getItem('tabIndex'))
+        });
+      }
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
+      this.storeCurrentState();
+    }
+  }, {
+    key: 'onClickTabNavHandler',
+    value: function onClickTabNavHandler(idx) {
+      this.setState({
+        currentIndex: idx
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var currentIndex = this.state.currentIndex;
+
+      return _react2.default.createElement(
+        TabPanel,
+        {
+          setCurrentNav: this.onClickTabNavHandler,
+          currentIndex: currentIndex },
+        _react2.default.createElement(
+          'div',
+          { tabname: 'chrome', className: 'tab-item' },
+          'tab content 1'
+        ),
+        _react2.default.createElement(
+          'div',
+          { tabname: 'firefox', className: 'tab-item' },
+          'tab content 2'
+        ),
+        _react2.default.createElement(
+          'div',
+          { tabname: 'safari', className: 'tab-item' },
+          'tab content 3'
+        ),
+        _react2.default.createElement(
+          'div',
+          { tabname: 'opera', className: 'tab-item' },
+          'tab content 4'
+        )
+      );
+    }
+  }]);
+
+  return Tabs;
+}(_react2.default.Component);
+
+Tabs.propTypes = {
+  hasStore: _propTypes2.default.bool
+};
+
+_reactDom2.default.render(_react2.default.createElement(Tabs, null), document.getElementById('app'));
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -655,12 +672,12 @@ if (true) {
   (function() {
 'use strict';
 
-var _assign = __webpack_require__(5);
+var _assign = __webpack_require__(3);
 var emptyObject = __webpack_require__(6);
-var invariant = __webpack_require__(2);
-var warning = __webpack_require__(3);
-var emptyFunction = __webpack_require__(1);
-var checkPropTypes = __webpack_require__(7);
+var invariant = __webpack_require__(1);
+var warning = __webpack_require__(2);
+var emptyFunction = __webpack_require__(0);
+var checkPropTypes = __webpack_require__(4);
 
 // TODO: this is special because it gets imported during build.
 
@@ -1998,25 +2015,6 @@ module.exports = react;
 
 
 /***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
-
-module.exports = ReactPropTypesSecret;
-
-
-/***/ }),
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2083,19 +2081,19 @@ if (true) {
   (function() {
 'use strict';
 
-var React = __webpack_require__(4);
-var invariant = __webpack_require__(2);
-var warning = __webpack_require__(3);
+var React = __webpack_require__(5);
+var invariant = __webpack_require__(1);
+var warning = __webpack_require__(2);
 var ExecutionEnvironment = __webpack_require__(12);
-var _assign = __webpack_require__(5);
-var emptyFunction = __webpack_require__(1);
+var _assign = __webpack_require__(3);
+var emptyFunction = __webpack_require__(0);
 var EventListener = __webpack_require__(13);
 var getActiveElement = __webpack_require__(14);
 var shallowEqual = __webpack_require__(15);
 var containsNode = __webpack_require__(16);
 var focusNode = __webpack_require__(19);
 var emptyObject = __webpack_require__(6);
-var checkPropTypes = __webpack_require__(7);
+var checkPropTypes = __webpack_require__(4);
 var hyphenateStyleName = __webpack_require__(20);
 var camelizeStyleName = __webpack_require__(22);
 
@@ -17517,7 +17515,7 @@ module.exports = ExecutionEnvironment;
  * @typechecks
  */
 
-var emptyFunction = __webpack_require__(1);
+var emptyFunction = __webpack_require__(0);
 
 /**
  * Upstream version of event listener. Does not take into account specific
@@ -18027,13 +18025,13 @@ if (true) {
 
 
 
-var emptyFunction = __webpack_require__(1);
-var invariant = __webpack_require__(2);
-var warning = __webpack_require__(3);
-var assign = __webpack_require__(5);
+var emptyFunction = __webpack_require__(0);
+var invariant = __webpack_require__(1);
+var warning = __webpack_require__(2);
+var assign = __webpack_require__(3);
 
-var ReactPropTypesSecret = __webpack_require__(9);
-var checkPropTypes = __webpack_require__(7);
+var ReactPropTypesSecret = __webpack_require__(7);
+var checkPropTypes = __webpack_require__(4);
 
 module.exports = function(isValidElement, throwOnDirectAccess) {
   /* global Symbol */
