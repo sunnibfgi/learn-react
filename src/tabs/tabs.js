@@ -24,7 +24,7 @@ class TabPanel extends React.Component {
 
     return (
       children.map((child, idx) =>
-        <li key={idx}
+        <li key={`tab-${idx}`}
           className={idx === currentIndex ? 'current' : ''}
           onClick={() => setCurrentNav(idx)}
         >
