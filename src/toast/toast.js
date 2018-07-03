@@ -10,6 +10,7 @@ class Toast extends React.Component {
     this.toastElement = null;
     this.timer = null;
     this.timeout = this.props.timeout;
+    this.el = document.createElement('div');
   }
   componentDidUpdate() {
     if (this.state.visible) {
@@ -28,6 +29,7 @@ class Toast extends React.Component {
     this.clearTimer();
   }
   componentDidMount() {
+    document.body.appendChild(this.el);
     if ('autoDisplay' in this.props) {
       this.autoDisplayToast();
     }
@@ -70,7 +72,7 @@ class Toast extends React.Component {
     return (
       <React.Fragment>
         {visible
-          ? ReactDOM.createPortal(toastElement, document.getElementById('modal-root')) : null}
+          ? ReactDOM.createPortal(toastElement, this.el) : null}
       </React.Fragment>
 
     );
