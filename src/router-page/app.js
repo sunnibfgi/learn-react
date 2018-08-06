@@ -13,7 +13,6 @@ class App extends React.Component {
     return (
       <div className="container">
         <Router>
-          <div>
             <Switch>
               <Route exact path="/home" component={Home} />
               <Route path="/category" component={Category} />
@@ -22,7 +21,6 @@ class App extends React.Component {
               <Redirect from="/" to="/home" />
               <Route component={NoMatch} />
             </Switch>
-          </div>
         </Router>
       </div>
     );
