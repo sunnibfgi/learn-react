@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 
 function SubMenu({children}) {
   return (
-    <div className="dropdown">
+    children ? <div className="dropdown">
       {children}
-    </div>
+    </div> : null
   );
 }
 
