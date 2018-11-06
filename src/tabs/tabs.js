@@ -35,10 +35,10 @@ class TabPanel extends React.Component {
   }
 
   renderTabContent() {
-    let props = {...this.props};
+    let {children, currentIndex} = this.props
     return (
       <div className="tab-content">
-        {props.children[props.currentIndex]}
+        {children[currentIndex]}
       </div>
     );
   }
