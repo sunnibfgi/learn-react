@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 function numberToFixed(value) {
-  if (isNaN(value)) return '';
-  return value ? parseFloat(value).toFixed(3) : '';
+  if (isNaN(value)) return ''
+  return value ? parseFloat(value).toFixed(3) : ''
 }
 
-const Context = React.createContext();
+const Context = React.createContext()
 
 class Controller extends React.Component {
   state = {
@@ -14,71 +14,71 @@ class Controller extends React.Component {
       pound: '',
       kg: '',
       ton: ''
-    },
-    type: ''
+    }
   }
 
-  handlePoundChange = ({target}) => {
-    this.setState({
-      type: 'pound',
-      unit: {
-        pound: target.value,
-        kg: numberToFixed(target.value * 0.45359237),
-        ton: numberToFixed(target.value * 0.45359237 / 1000)
-      }
-    });
-  }
-  handleKilogramChange = ({target}) => {
-    this.setState({
-      type: 'kg',
-      unit: {
-        pound: numberToFixed(target.value * 2.20462),
-        kg: target.value,
-        ton: numberToFixed(target.value / 1000)
-      }
-    });
-  }
-  handleTonChange = ({target}) => {
-    this.setState({
-      type: 'ton',
-      unit: {
-        pound: numberToFixed(target.value * 1000 * 2.20462),
-        kg: numberToFixed(target.value * 1000),
-        ton: target.value
-      }
-    });
+  handleInputChangeByName = ({target}) => {
+    switch (target.name) {
+    case 'pound':
+      this.setState({
+        unit: {
+          pound: target.value,
+          kg: numberToFixed(target.value * 0.45359237),
+          ton: numberToFixed(target.value * 0.45359237 / 1000) 
+        }
+      })
+      break
+    case 'kg':
+      this.setState({
+        unit: {
+          kg: target.value,
+          pound: numberToFixed(target.value * 2.20462),
+          ton: numberToFixed(target.value / 1000)
+        }
+      })
+      break
+    case 'ton':
+      this.setState({
+        unit: {
+          ton: target.value,
+          kg: numberToFixed(target.value * 1000),
+          pound: numberToFixed(target.value * 1000 * 2.20462)
+        }
+      })
+      break
+    default:
+      break
+    } 
   }
 
   render() {
-    let {children} = this.props;
+    let {children} = this.props
     return (
-      <Context.Provider
+      <Context.Provider 
         value={{
           ...this.state,
-          handlePoundChange: this.handlePoundChange,
-          handleKilogramChange: this.handleKilogramChange,
-          handleTonChange: this.handleTonChange
+          handleInputChangeByName: this.handleInputChangeByName
         }}>
         {children}
       </Context.Provider>
-    );
+    )
   }
 }
 
 function App() {
   return (
     <Controller>
-      <Block name="ja">
+      <Block>
         <KilogramInput />
         <PoundInput />
         <TonInput />
       </Block>
     </Controller>
-  );
+  )
 }
 
-function Block({...props}) {
-  return <div className="block" {...props} />;
+function Block({name, ...props}) {
+  return <div className="block" {...props} />
 }
 
 function PoundInput() {
@@ -90,15 +90,16 @@ function PoundInput() {
             <p>
               <label>pounds:</label>
               <input
-                value={context.unit.pound}
-                onChange={context.handlePoundChange}
+                name="pound" 
+                value={context.unit.pound} 
+                onChange={context.handleInputChangeByName} 
               />
             </p>
-          );
+          )
         }
       }
     </Context.Consumer>
-  );
+  )
 }
 
 function KilogramInput() {
@@ -109,16 +110,17 @@ function KilogramInput() {
           return (
             <p>
               <label>kilograms:</label>
-              <input
-                value={context.unit.kg}
-                onChange={context.handleKilogramChange}
+              <input 
+                name="kg"
+                value={context.unit.kg}  
+                onChange={context.handleInputChangeByName} 
               />
             </p>
-          );
+          )
         }
       }
     </Context.Consumer>
-  );
+  )
 }
 function TonInput() {
   return (
@@ -128,16 +130,17 @@ function TonInput() {
           return (
             <p>
               <label>tons:</label>
-              <input
-                value={context.unit.ton}
-                onChange={context.handleTonChange}
+              <input 
+                name="ton"
+                value={context.unit.ton}  
+                onChange={context.handleInputChangeByName} 
               />
             </p>
-          );
+          )
         }
       }
     </Context.Consumer>
-  );
+  )
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
