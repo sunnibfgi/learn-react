@@ -68,10 +68,8 @@ class Controller extends React.Component {
 function App() {
   return (
     <Controller>
-      <Block>
-        <KilogramInput />
-        <PoundInput />
-        <TonInput />
+      <Block name="ja">
+        <UnitWeightInput />
       </Block>
     </Controller>
   )
@@ -81,61 +79,38 @@ function Block({name, ...props}) {
   return <div className="block" {...props} />
 }
 
-function PoundInput() {
+function UnitWeightInput() {
   return (
     <Context.Consumer>
       {
         (context) => {
           return (
-            <p>
-              <label>pounds:</label>
-              <input
-                name="pound" 
-                value={context.unit.pound} 
-                onChange={context.handleInputChangeByName} 
-              />
-            </p>
-          )
-        }
-      }
-    </Context.Consumer>
-  )
-}
-
-function KilogramInput() {
-  return (
-    <Context.Consumer>
-      {
-        (context) => {
-          return (
-            <p>
-              <label>kilograms:</label>
-              <input 
-                name="kg"
-                value={context.unit.kg}  
-                onChange={context.handleInputChangeByName} 
-              />
-            </p>
-          )
-        }
-      }
-    </Context.Consumer>
-  )
-}
-function TonInput() {
-  return (
-    <Context.Consumer>
-      {
-        (context) => {
-          return (
-            <p>
-              <label>tons:</label>
-              <input 
-                name="ton"
-                value={context.unit.ton}  
-                onChange={context.handleInputChangeByName} 
-              />
-            </p>
+            <div className="demo">
+              <p>
+                <label>pounds:</label>
+                <input
+                  name="pound" 
+                  value={context.unit.pound} 
+                  onChange={context.handleInputChangeByName} 
+                />
+              </p>
+              <p>
+                <label>kg:</label>
+                <input
+                  name="kg" 
+                  value={context.unit.kg} 
+                  onChange={context.handleInputChangeByName} 
+                />
+              </p>
+              <p>
+                <label>ton:</label>
+                <input
+                  name="ton" 
+                  value={context.unit.ton} 
+                  onChange={context.handleInputChangeByName} 
+                />
+              </p>
+            </div>
           )
         }
       }
