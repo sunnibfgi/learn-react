@@ -58,11 +58,13 @@ class SelectCascade extends React.Component {
   }
 
   handleChange = (value, currentLevel, itemIndex) => {
-    
-
     let items = this.state.items.slice()
     let currentValues = this.state.currentValues.slice()
-    this.fetch(itemIndex, JSON.parse(value).id)
+    var value = JSON.parse(value)
+    if(typeof value !== 'object') 
+      return false
+    
+    this.fetch(itemIndex, value.id)
     
     this.setCurrentState(currentValues, currentLevel, itemIndex)
     this.setCurrentState(items, currentLevel, itemIndex)
@@ -72,15 +74,16 @@ class SelectCascade extends React.Component {
       items,
       currentValues: state.currentValues.map((item, i) => {
         if(i === itemIndex) {
-          item = Object.assign(item, {[currentLevel]: value})
+          item = Object.assign(item, {
+            [currentLevel]: JSON.stringify(value)
+          })
         }
         return item
       })
     }), () => {
-      console.log(this.state.items, this.state.currentValues)
+      console.log(this.state.items)
     })
   }
-
 
   fetch = async (itemIndex, id = 0) => {
     let {api} = this.props
