@@ -84,7 +84,6 @@ class SelectCascade extends React.Component {
   }
 
   handleChange = (value, currentLevel, itemIndex) => {
-    
     let items = this.state.items.slice()
     let currentValues = this.state.currentValues.slice()
     var value = JSON.parse(value)
@@ -112,7 +111,6 @@ class SelectCascade extends React.Component {
     })
   }
 
-
   fetch = async (itemIndex, id = 0) => {    
     let result = await this.props.fetch(id)
     let {content} = result.data
@@ -126,8 +124,7 @@ class SelectCascade extends React.Component {
           }
           return item
         })
-      }), () => {
-      })
+      }))
     }
   }
 
