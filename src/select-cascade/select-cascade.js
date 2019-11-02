@@ -84,7 +84,10 @@ class SelectCascade extends React.Component {
   }
 
   handleChange = (value, currentLevel, itemIndex) => {
+<<<<<<< HEAD
     
+=======
+>>>>>>> da2ff2c... Update select-cascade.js
     let items = this.state.items.slice()
     let currentValues = this.state.currentValues.slice()
     var value = JSON.parse(value)
@@ -112,9 +115,15 @@ class SelectCascade extends React.Component {
     })
   }
 
+<<<<<<< HEAD
 
   fetch = async (itemIndex, id = 0) => {    
     let result = await this.props.fetch(id)
+=======
+  fetch = async (itemIndex, id = 0) => {
+    let {api} = this.props
+    let result = await Http.get(`/qualification/getCQByPid/${id}`)
+>>>>>>> da2ff2c... Update select-cascade.js
     let {content} = result.data
     let level = this.props.getItemProps(content, 'level')
     if(content.length) {
