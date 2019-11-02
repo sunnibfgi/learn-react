@@ -111,7 +111,6 @@ class SelectCascade extends React.Component {
     })
   }
 
-
   fetch = async (itemIndex, id = 0) => {    
     let result = await this.props.fetch(id)
     let {content} = result.data
@@ -125,8 +124,7 @@ class SelectCascade extends React.Component {
           }
           return item
         })
-      }), () => {
-      })
+      }))
     }
   }
 
