@@ -178,7 +178,10 @@ class SelectCascade extends React.Component {
                         key={i} 
                         level={i} 
                         itemIndex={idx} 
-                        currentValue={this.state.currentValues[idx] && this.state.currentValues[idx][i]}
+                        currentValue={
+                          this.state.currentValues[idx] && 
+                          JSON.stringify(this.state.currentValues[idx][i])
+                        }
                         items={items[idx]} 
                         onChange={this.handleChange} 
                       />
