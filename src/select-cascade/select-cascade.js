@@ -88,7 +88,10 @@ class SelectCascade extends React.Component {
     let currentValues = this.state.currentValues.slice()
     try {
       var value = JSON.parse(value)
-    }catch(e) {}
+    }
+    catch(err) {
+      if(err) throw err
+    }
     
     this.fetch(itemIndex, value.id)
     
