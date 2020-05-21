@@ -1,6 +1,5 @@
 import React from 'react'
 
-
 const EmailList = React.forwardRef(({emailList, index, visible}, ref) => {
   return (
     <div className="content" style={{ display: visible ? '' : 'none'}} ref={ref}>
