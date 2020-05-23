@@ -2,7 +2,11 @@ import React from 'react'
 
 const EmailList = React.forwardRef(({emailList, index, visible}, ref) => {
   return (
-    <div className="content" style={{ display: visible ? '' : 'none'}} ref={ref}>
+    <div 
+      ref={ref}
+      className="content" 
+      style={{ display: visible ? '' : 'none'}} 
+    >
       {
         emailList.sort().map((email, i) => 
           <Item 
@@ -24,7 +28,7 @@ class App extends React.Component {
     index: 0,
     visiblePanel: true
   }
-  filterEmail: null 
+  filterEmail = null 
   handleChange = ({target}) => {
     let value = target.value
     this.splitValue = ~value.indexOf('@') && (value.indexOf('@') === value.lastIndexOf('@')) ? value.split('@') : null
@@ -35,7 +39,6 @@ class App extends React.Component {
     })
   }
   componentDidMount() {
-    console.log(this.inputRef)
     this.inputRef.focus()
     document.addEventListener('click', this.listener = function(e) {
       if(e.target === this.inputRef) return
@@ -60,9 +63,9 @@ class App extends React.Component {
     }, callback)
   }
   
-  handleKeyDown = ({keyCode, nativeEvent}) => {
-    nativeEvent.stopPropagation && nativeEvent.stopPropagation()
-    switch (keyCode) {
+  handleKeyDown = (e) => {
+    e.stopPropagation()
+    switch (e.keyCode) {
     case 13:
       this.getFullEmailValue(this.state.index, () => {
         this.inputRef.blur()
@@ -70,6 +73,7 @@ class App extends React.Component {
       this.splitValue = null
       return
     case 38:
+      e.preventDefault()
       this.setState(state => ({
         ...this.state,
         index: this.splitValue ? (state.index > 0 ? state.index - 1 : this.filterEmail.length - 1) : 0
