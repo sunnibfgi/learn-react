@@ -173,7 +173,7 @@ class SelectCascade extends React.Component {
             return (
               <div 
                 style={{marginBottom:'15px'}}
-                key={`${Math.random().toString(16).substr(2)}`}>
+                key={list}>
                 {
                   Array(selectNumber).fill(null).map((item, i) => {
                     return (
