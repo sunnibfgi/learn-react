@@ -36,8 +36,8 @@ class DropdownMenu extends React.Component {
   }
 
   render() {
-    let {navName, children} = this.props;
-    let {visible} = this.state;
+    const {navName, children} = this.props;
+    const {visible} = this.state;
     return (
       <li
         style={{float: 'left', listStyle: 'none', marginLeft: '10px'}}
